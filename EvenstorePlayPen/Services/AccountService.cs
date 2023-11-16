@@ -6,10 +6,13 @@ namespace EvenstorePlayPen.Services;
 public class AccountService
 {
     private readonly EventStoreRepository _eventStoreRepository;
+    private readonly EventStoreRepositoryGRPC _eventStoreRepositoryGrpc;
 
-    public AccountService(EventStoreRepository eventStoreRepository)
+    public AccountService(EventStoreRepository eventStoreRepository,
+        EventStoreRepositoryGRPC eventStoreRepositoryGrpc)
     {
         _eventStoreRepository = eventStoreRepository;
+        _eventStoreRepositoryGrpc = eventStoreRepositoryGrpc;
     }
 
     public async Task AddAccount(Account account)
@@ -18,7 +21,7 @@ public class AccountService
         {
             Account = account
         };
-        await _eventStoreRepository.AppendEvents(GetStreamName(account.Id), accountCreated);
+        await _eventStoreRepositoryGrpc.AppendEvents(GetStreamName(account.Id), accountCreated);
     }
     
     public async Task UpdateAccount(Account account)

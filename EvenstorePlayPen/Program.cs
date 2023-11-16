@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<AccountService>();
 builder.Services.AddSingleton<EventStoreRepository>();
+builder.Services.AddSingleton<EventStoreRepositoryGRPC>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
